@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Luxury Wheels</title>
+</head>
+<body>
+<main>
+  <h1>Welcome to Luxury Wheels </h1>
+  <h2> Available Vehicles</h2>
+  <ul>
+    {% for vehicle in vehicles %}
+    <li>
+      <strong>{{ vehicle.model }}</strong><br>
+      Type: {{ vehicle.type }}<br>
+      Year: {{ vehicle.year }}<br>
+      Price per Day: {{ vehicle.price_per_day }}<br>
+      <a href="/select/{{ vehicle.id }}">Select</a>
+    </li>
+    {% endfor %}
+  </ul>
+</main>
+</body>
+</html>
