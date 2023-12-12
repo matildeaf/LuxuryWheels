@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content=" width=device-width,initial-scale=1">
+    <title>Manage Page</title>
+    <!--connection to main-css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    <!--Bootswatch template lux-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Luxury Wheels</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class=" collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" id="logout" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="nav-item nav-link" id="home" href="/">Home</a>
+                    <a class="nav-item nav-link" id="Vehicles" href="{{ url_for('vehicle') }}">Vehicles</a>
+                    <a class="nav-item nav-link" id="Clients" href="{{ url_for('clients') }}">Clients</a>
+                    <a class="nav-item nav-link" id="finances" href="{{ url_for('finances') }}">Finances</a>
+                    {% if user_role == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('manage_cars') }}">Manage Cars</a>
+                    </li>
+                    {% endif %}
+                    <div class="nav-spacing"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi-bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                    </svg>
+                    <a class="nav-item nav-link" id="first_name">{{ client[0][1] }}</a>
+                    <a class="nav-item nav-link" id="last_name">{{ client[0][2] }}</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Display maintenance alerts -->
+    {% if maintenance_alerts %}
+    <div class="alert alert-danger">
+        <h4>Maintenance Alerts:</h4>
+        <ul>
+            {% for alert in maintenance_alerts %}
+            <li>{{ alert }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    </div>
+    <!-- Display legal alerts -->
+
+    <div class="alert alert-danger">
+        <h4>Legal Alerts:</h4>
+        <ul>
+            {% for l in legal %}
+            <li>{{ l }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    </div>
+    <!-- Display stock alerts -->
+    <div class="alert alert-danger">
+        <h4>Stock Alerts:</h4>
+        <ul>
+            {% for s in stock %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

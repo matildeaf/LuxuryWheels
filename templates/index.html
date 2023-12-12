@@ -2,23 +2,458 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content=" width=device-width,initial-scale=1">
+  <!--connection to main-css -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <!--Bootswatch template lux-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
   <title>Luxury Wheels</title>
 </head>
 <body>
-<main>
-  <h1>Welcome to Luxury Wheels </h1>
-  <h2> Available Vehicles</h2>
-  <ul>
-    {% for vehicle in vehicles %}
-    <li>
-      <strong>{{ vehicle.model }}</strong><br>
-      Type: {{ vehicle.type }}<br>
-      Year: {{ vehicle.year }}<br>
-      Price per Day: {{ vehicle.price_per_day }}<br>
-      <a href="/select/{{ vehicle.id }}">Select</a>
-    </li>
-    {% endfor %}
-  </ul>
-</main>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" >Luxury Wheels</a>
+    <!-- Button for hamburger menu  -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class=" nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Vehicles</a>
+            <div class="dropdown-menu" >
+              <a class="dropdown-item" href="#category1">Compact</a>
+              <a class="dropdown-item" href="#category2">City</a>
+              <a class="dropdown-item" href="#category3">Mid</a>
+              <a class="dropdown-item" href="#category4">Executive</a>
+              <a class="dropdown-item" href="#category5">Lux</a>
+            </div>
+        </li>
+        <a class="nav-item nav-link" id="login" href="{{ url_for('login') }}">Login</a>
+        <a class="nav-item nav-link" id="Register" href="{{ url_for('register') }}">Register</a>
+      </ul>
+    </div>
+  </nav>
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+         <div class="title-separator"></div>
+          <h2 class="mb-3">Luxury Renting Solutions</h2>
+        </div>
+        <div class="col-12">
+          <div id="car_carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="https://www.topgear.com/sites/default/files/2021/11/1063340_mw7_4227.jpg?w=976&h=549" class="d-block w-100" alt="Fiat 500">
+                    <div class="card-body">
+                      <h3 class="card-title"><a href="#category1">Compact</a></h3>
+                      <p class="card-text">Fiat 500</p>
+                      <!--a href="#" class="btn btn-primary">View Details</a-->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="https://car-images.bauersecure.com/wp-images/4424/peugeot_308_1.jpg" class="d-block w-100" alt="Peugeot 308">
+                    <div class="card-body">
+                      <h4 class="card-title"><a href="#category2">City</a></h4>
+                      <p class="card-text">Peugeot 308</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="https://cdn.group.renault.com/dac/master/dacia-vn/vehicules/sandero/sandero-bji/sandero-bji-ph1/hero-zones/dacia-sandero-bji-ph1-hero-zone-001.jpg.ximg.small.jpg/ea2f8321b9.jpg" class="d-block w-100" alt="Dacia Sandero">
+                    <div class="card-body">
+                      <h5 class="card-title"><a href="#category3">Mid</a></h5>
+                      <p class="card-text">Dacia Sandero</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="https://fotos-jornaldocarro-estadao.nyc3.cdn.digitaloceanspaces.com/uploads/2019/10/15140636/62cae66f-2020-bmw-2-series-gran-coupe-2.jpg" class="d-block w-100" alt="BMW S2 Coupe">
+                    <div class="card-body">
+                      <h6 class="card-title"><a href="#category4">Executive</a> </h6>
+                      <p class="card-text">BMW S2 Coupe</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="https://pics.porsche.com/rtt/iris?COSY-EU-100-1713c6eK12UC31P3T5JOCU%25hjdmiTDDmvMXlHWguCuq6Q44RtRHo9ZAaDjYu5P3I7tGW3rNbZJNKXv9Z7KcQQ%25yFN5tFAsXrw4r3wo0qnqZr8MCnR4i84tV2YN2OmNyW1QGWgCWKMUuyO8mv60KwChQ58ysgfN%25YF0Dy1wQ9%25ddmfIjMaMDrx5VL8uJWRaVWCAxFHhDY2O%25P3TexLeuqXWIJCCgf%25oWjrHwo0nq8J" class="d-block w-100" alt="Porsche Taycan">
+                    <div class="card-body">
+                      <h7 class="card-title"><a href="#category5">Lux</a></h7>
+                      <p class="card-text">Porsche Taycan</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="card-separator"></div>
+    <section id="category1">
+      <h8 class="header">Compact</h8>
+      <!--Fiat 500-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[0][2] }}</h2>
+            <p>Year: {{ vehicles[0][4] }}</p>
+            <p>Fuel: {{ vehicles[0][5] }}</p>
+            <p>Number of Seats: {{ vehicles[0][8] }}</p>
+            <p>Gear: {{ vehicles[0][9] }}</p>
+            <p>Price: {{ vehicles[0][6] }}</p>
+            <p>Category: Economic </p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://www.topgear.com/sites/default/files/2021/11/1063340_mw7_4227.jpg?w=976&h=549" alt = "Fiat 500">
+            <img src="https://www.topgear.com/sites/default/files/2021/11/1063411_mw9_1319.jpg?w=976&h=549" alt="Fiat-500">
+            <img src="https://i.pinimg.com/originals/bf/8d/66/bf8d66448874452d63c993b02ca64a20.jpg" alt="Fiat 500">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!--Renault Twingo-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[1][2] }}</h2>
+            <p>Year: {{ vehicles[1][4] }}</p>
+            <p>Fuel: {{ vehicles[1][5] }}</p>
+            <p>Number of Seats: {{ vehicles[1][8] }}</p>
+            <p>Gear: {{ vehicles[1][9] }}</p>
+            <p>Price: {{ vehicles[1][6] }}</p>
+            <p>Category: Economic</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://www.mcoutinho.pt/content/uploads/maingallery/crops/352792_default_1667456198.jpg" alt="Renault Twingo">
+            <img src="https://motori.money.it/local/cache-gd2/54/2170275a0def41eaf8be0451209ed2.jpg?1637867767" alt="Renault Twingo">
+            <img src="https://cdn.group.renault.com/ren/master/renault-new-cars/product-plans/twingo/b07-twingo/b07-twingo-ph2/2560x1440-responsive-format/renault-twingo3-ph2-interior-lifestyle-003.jpg.ximg.large.webp/81fa585ab2.webp" alt="Renault Twingo">
+          </div>
+        </div>
+      </div>
+    </section>
+    <hr class="category-separator"></hr>
+    <section id="category2">
+      <h9 class="header">City</h9>
+      <!--Peugeot 308-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[2][2] }}</h2>
+            <p>Year: {{ vehicles[2][4] }}</p>
+            <p>Fuel: {{ vehicles[2][5] }}</p>
+            <p>Number of Seats: {{ vehicles[2][8] }}</p>
+            <p>Gear: {{ vehicles[2][9] }}</p>
+            <p>Price: {{ vehicles[2][6] }}</p>
+            <p>Category: Economic</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src=https://car-images.bauersecure.com/wp-images/4424/peugeot_308_1.jpg alt="Peugeot 308">
+            <img src="https://media.drivingelectric.com/image/private/s--PGfIJYdq--/v1615994467/drivingelectric/2021-03/PEUGEOT_308PHEV_2103STYP_006B.jpg" alt="Peujeot 308">
+            <img src="https://paultan.org/cn/image/2021/03/2021-Peugeot-308-2.jpg" alt="Peugeot 308">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!--Opel Corsa-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[3][2] }}</h2>
+            <p>Year: {{ vehicles[3][4] }}</p>
+            <p>Fuel: {{ vehicles[3][5] }}</p>
+            <p>Number of Seats: {{ vehicles[3][8] }}</p>
+            <p>Gear: {{ vehicles[3][9] }}</p>
+            <p>Price: {{ vehicles[3][6] }}</p>
+            <p>Category: Economic</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://stellantis3.dam-broadcast.com/medias/domain12808/media107258/2177697-ijug7m1bda-whr.jpg" alt="Opel Corsa">
+            <img src="https://www.razaoautomovel.com/wp-content/uploads/2023/05/Opel-Corsa-23-02.jpg" alt="Opel Corsa">
+            <img src="https://www.razaoautomovel.com/wp-content/uploads/2023/05/Opel-Corsa-23-03.jpg" alt="Opel Corsa">
+          </div>
+        </div>
+      </div>
+    </section>
+    <hr class="category-separator"></hr>
+    <section id="category3">
+      <h10 class="header">Mid</h10>
+      <div></div>
+      <!--Dacia Sandero-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[4][2] }}</h2>
+            <p>Year: {{ vehicles[4][4] }}</p>
+            <p>Fuel: {{ vehicles[4][5] }}</p>
+            <p>Number of Seats: {{ vehicles[4][8] }}</p>
+            <p>Gear: {{ vehicles[4][9] }}</p>
+            <p>Price: {{ vehicles[4][6] }}</p>
+            <p>Category: Economic</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://cdn.group.renault.com/dac/master/dacia-vn/vehicules/sandero/sandero-bji/sandero-bji-ph1/edito-2560-x-1440/dacia-sandero-bji-ph1-002.jpg.ximg.mediumx2.webp/4fb6dba09c.webp">
+            <img src="https://cdn.group.renault.com/dac/master/dacia-vn/vehicules/sandero/sandero-bji/sandero-bji-ph1/edito-2560-x-1440/dacia-sandero-bji-ph1-001.jpg.ximg.xsmall.jpg/ad1ba1fd77.jpg" alt="Dacia Sandero">
+            <img src="https://cdn.group.renault.com/dac/master/dacia-vn/vehicules/sandero/sandero-bji/sandero-bji-ph1/hero-zones/dacia-sandero-bji-ph1-hero-zone-001.jpg.ximg.small.jpg/ea2f8321b9.jpg" alt="Dacia Sandero">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <div></div>
+      <!--Mitsubishi_ASX_Invite-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[5][2] }}</h2>
+            <p>Year: {{ vehicles[5][4] }}</p>
+            <p>Fuel: {{ vehicles[5][5] }}</p>
+            <p>Number of Seats: {{ vehicles[5][8] }}</p>
+            <p>Gear: {{ vehicles[5][9] }}</p>
+            <p>Price: {{ vehicles[5][6] }}</p>
+            <p>Category: Silver</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://jackhammer.janeladigital.com/Z800x600/OAYES/S56/C3/V0/Tphoto/ID87488-ASX-Invite-6.png.webp" alt="Mitsubishi ASX Invite">
+            <img src="https://jackhammer.janeladigital.com/Z800x600/OAYES/S56/C3/V0/Tphoto/ID87488-ASX-Invite-3.png.webp" alt="Mitsubishi ASX Invite">
+            <img src="https://jackhammer.janeladigital.com/Z800x600/OAYES/S56/C3/V0/Tphoto/ID87488-ASX-Invite-1.png.webp" alt="Mitsubishi ASX Invite">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!-- Opel Crossland-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[6][2] }}</h2>
+            <p>Year: {{ vehicles[6][4] }}</p>
+            <p>Fuel: {{ vehicles[6][5] }}</p>
+            <p>Number of Seats: {{ vehicles[6][8] }}</p>
+            <p>Gear: {{ vehicles[6][9] }}</p>
+            <p>Price: {{ vehicles[6][6] }}</p>
+            <p>Category: Silver</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://www.media.stellantis.com/cache/2/c/f/1/9/2cf19b83e7c1a47c72e1ac61f6603e9e4e31d287.jpeg" alt="Opel Crossland">
+            <img src="https://www.media.stellantis.com/cache/a/e/b/8/1/aeb81a7bc79133d12e9704efc1eecc36f9ccfa45.jpeg" alt="Opel Crossland">
+            <img src="https://www.razaoautomovel.com/wp-content/uploads/2020/10/2021-Opel-Crossland-facelift-4_925x520_acf_cropped-925x520.jpg" alt="Opel Crossland">
+          </div>
+        </div>
+      </div>
+    </section>
+    <hr class="category-separator"></hr>
+    <section id="category4">
+      <h11 class="header">Executive</h11>
+      <div></div>
+      <!--BWM_S1-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[7][2] }}</h2>
+            <p>Year: {{ vehicles[7][4] }}</p>
+            <p>Fuel: {{ vehicles[7][5] }}</p>
+            <p>Number of Seats: {{ vehicles[7][8] }}</p>
+            <p>Gear: {{ vehicles[7][9] }}</p>
+            <p>Price: {{ vehicles[7][6] }}</p>
+            <p>Category: Silver</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://www.leaseplan.com/-/media/leaseplan-digital/pt/business-lease-and-private-lease/spotlight-pages/20_bmw-srie-1/bmw-1-series-2020-1280-03.jpg?rev=-1&mw=960" alt="BMW S1">
+            <img src="https://www.leaseplan.com/-/media/leaseplan-digital/pt/business-lease-and-private-lease/spotlight-pages/20_bmw-srie-1/bmw-1-series-2020-1280-25.jpg?rev=-1&mw=960" alt="BMW S1">
+            <img src="https://www.leaseplan.com/-/media/leaseplan-digital/pt/business-lease-and-private-lease/spotlight-pages/20_bmw-srie-1/bmw-1-series-2020-1280-5c.jpg?rev=-1&mw=960" alt="BMW S1">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!--BWM_S2 Coupe-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[8][2] }}</h2>
+            <p>Year: {{ vehicles[8][4] }}</p>
+            <p>Fuel: {{ vehicles[8][5] }}</p>
+            <p>Number of Seats: {{ vehicles[8][8] }}</p>
+            <p>Gear: {{ vehicles[8][9] }}</p>
+            <p>Price: {{ vehicles[8][6] }}</p>
+            <p>Category: Silver</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://fotos-jornaldocarro-estadao.nyc3.cdn.digitaloceanspaces.com/uploads/2019/10/15140636/62cae66f-2020-bmw-2-series-gran-coupe-2.jpg" alt="BMW S2 Coupe">
+            <img src="https://i.bstr.es/highmotor/2019/10/bmw-m2-gran-coupe-8.jpg" alt="BMW S2 Coupe">
+            <img src="https://i0.wp.com/www.autodestaque.net.br/wp-content/uploads/2020/03/1-13.jpg?fit=1024%2C683" alt="BMW S2 Coupe">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!--Mercedes Class C-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[9][2] }}</h2>
+            <p>Year: {{ vehicles[9][4] }}</p>
+            <p>Fuel: {{ vehicles[9][5] }}</p>
+            <p>Number of Seats: {{ vehicles[9][8] }}</p>
+            <p>Gear: {{ vehicles[9][9] }}</p>
+            <p>Price: {{ vehicles[9][6] }}</p>
+            <p>Category: Silver</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://auto-drive.pt/wp-content/uploads/2021/02/mercedes-c-klasse-limousine-2021.jpg" alt="Mercedes Class C">
+            <img src="https://auto-drive.pt/wp-content/uploads/2021/02/mercedes-c-klasse-limousine-2021-13.jpg" alt="Mercedes Class C">
+            <img src="https://auto-drive.pt/wp-content/uploads/2021/02/mercedes-c-klasse-limousine-2021-4.jpg" alt="Mercedes Class C">
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </section>
+    <hr class="category-separator"></hr>
+    <section id="category5">
+      <h12 class="header">Lux</h12>
+      <div></div>
+      <!--BMW S8 Cabrio-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[10][2] }}</h2>
+            <p>Year: {{ vehicles[10][4] }}</p>
+            <p>Fuel: {{ vehicles[10][5] }}</p>
+            <p>Number of Seats: {{ vehicles[10][8] }}</p>
+            <p>Gear: {{ vehicles[10][9] }}</p>
+            <p>Price: {{ vehicles[10][6] }}</p>
+            <p>Category: Gold</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://www.topgear.com/sites/default/files/cars-car/carousel/2019/04/bmw_m850i_xdrive_convertible_23.jpg?w=976&h=549" alt="BMW S8 Cabrio">
+            <img src="https://www.topgear.com/sites/default/files/cars-car/carousel/2019/04/bmw_m850i_xdrive_convertible_35.jpg?w=976&h=549" alt="BMW S8 Cabrio">
+            <img src="https://www.topgear.com/sites/default/files/cars-car/carousel/2019/04/bmw_m850i_xdrive_convertible_01.jpg?w=976&h=549" alt="BMW S8 Cabrio">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!--Lexus LC500 Cabrio-->
+      <div class="car-container">
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[11][2] }}</h2>
+            <p>Year: {{ vehicles[11][4] }}</p>
+            <p>Fuel: {{ vehicles[11][5] }}</p>
+            <p>Number of Seats: {{ vehicles[11][8] }}</p>
+            <p>Gear: {{ vehicles[11][9] }}</p>
+            <p>Price: {{ vehicles[11][6] }}</p>
+            <p>Category: Gold</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://www.motor24.pt/files/2021/07/lexuslccabrio044.jpg" alt="Lexus LC500 Cabrio">
+            <img src="https://www.motor24.pt/files/2021/07/lexuslccabrio039.jpg" alt="Lexus LC500 Cabrio">
+            <img src="https://www.motor24.pt/files/2021/07/lexuslccabrio008.jpg" alt="Lexus LC500 Cabrio">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!--Porche Taycan-->
+        <div class="info-row">
+          <!-- Car Info Column -->
+          <div class="col-md-6">
+            <h2>{{ vehicles[12][2] }}</h2>
+            <p>Year: {{ vehicles[12][4] }}</p>
+            <p>Fuel: {{ vehicles[12][5] }}</p>
+            <p>Number of Seats: {{ vehicles[12][8] }}</p>
+            <p>Gear: {{ vehicles[12][9] }}</p>
+            <p>Price: {{ vehicles[12][6] }}</p>
+            <p>Category: Gold</p>
+            <div></div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+          </div>
+          <!-- Car Pictures -->
+          <div class="images-row">
+            <img src="https://pics.porsche.com/rtt/iris?COSY-EU-100-1713c6eK12UC31P3T5JOCU%25hjdmiTDDmvMXlHWguCuq6Q44RtRHo9ZAaDjYu5P3I7tGW3rNbZJNKXv9Z7KcQQ%25yFN5tFAsXrw4r3wo0qnqZr8MCnR4i84tV2YN2OmNyW1QGWgCWKMUuyO8mv60KwChQ58ysgfN%25YF0Dy1wQ9%25ddmfIjMaMDrx5VL8uJWRaVWCAxFHhDY2O%25P3TexLeuqXWIJCCgf%25oWjrHwo0nq8J" alt="Porsche Taycan">
+            <img src="https://pics.porsche.com/rtt/iris?COSY-EU-100-1713c6eK12UC31P3T5JOCU%25hjdmiTDDmvMXlHWguCuq6Q44RtRHo9ZAaDjYu5P3I7tGW3rNbZJNKXv9A7KcQQ%25yFN5tFAsXrw4r3wo0qnqZr8MCnR4i84tV2YN2OmNyW1QGWgCWKMUuyO8mv60KwChQ58ysgfN%25YF0Dy1wQ9%25ddmfIjMaMDrx5VL8uJWRaVWCAxFHhDY2O%25P3TexLeuqXWIJCCgf%25oWjrHwo0nq8J" alt="Porsche Taycan">
+            <img src="https://pics.porsche.com/rtt/iris?COSY-EU-100-1713c6eK12UC31P3T5JOCU%25hjdmiTDDmvMXlHWguCuq6Q44RtRHo9ZAaDjYu5P3I7tGW3rNbZJNKXv9U7KcQQ%25yFN5tFAsXrw4r3wo0qnqZr8MCnR4i84tV2YN2OmNyW1QGWgCWKMUuyO8mv60KwChQ58ysgfN%25YF0Dy1wQ9%25ddmfIjMaMDrx5VL8uJWRaVWCAxFHhDY2O%25P3TexLeuqXWIJCCgf%25oWjrHwo0nq8J" alt="Porsche Taycan">
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <!--Tesla M3-->
+      <div class="info-row">
+        <!-- Car Info Column -->
+        <div class="col-md-6">
+          <h2>{{ vehicles[13][2] }}</h2>
+          <p>Year: {{ vehicles[13][4] }}</p>
+          <p>Fuel: {{ vehicles[13][5] }}</p>
+          <p>Number of Seats: {{ vehicles[13][8] }}</p>
+          <p>Gear: {{ vehicles[13][9] }}</p>
+          <p>Price: {{ vehicles[13][6] }}</p>
+          <p>Category: Gold</p>
+          <div></div>
+          <a href="{{ url_for('login') }}" class="btn btn-primary">Book me</a>
+        </div>
+        <!-- Car Pictures -->
+        <div class="images-row">
+          <img src="https://www.razaoautomovel.com/wp-content/uploads/2018/12/Tesla-model-3-performance_2_925x520_acf_cropped_925x520_acf_cropped.jpg.webp" alt="Tesla M3">
+          <img src="https://www.razaoautomovel.com/wp-content/uploads/2018/11/Tesla-model-3-performance_1-1440x960.jpg" alt="Tesla M3">
+          <img src="https://www.razaoautomovel.com/wp-content/uploads/2018/12/Tesla-Model-3-Performance-teste-portugal-1-723x960.jpg" alt="Tesla M3">
+        </div>
+      </div>
+    </div>
+    </section>
+  </main>
 </body>
 </html>
+

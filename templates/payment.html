@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=" width=device-width,initial-scale=1">
+    <title>Payement</title>
+    <!--connection to main-css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <!--Bootswatch template lux-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="payment-card">
+        <h1>Payment Details</h1>
+        <p>You are about to make a payment for the following booking:</p>
+        <p>Vehicle: {{ vehicle[2] }}</p>
+        <p>Total Price: {{ booking['total_price'] }}</p>
+        <form action="/complete_payment" method="POST">
+            <div class="payment-form-group">
+                <label class="form-label mt-4" for="card_number">Card Number</label>
+                <input class="form-control" type="text" id="card_number" name="card_number" required>
+            </div>
+            <div class="payment-form-group">
+                <label class="form-label mt-4" for="first_name">First Name</label>
+                <input class="form-control" type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="payment-form-group">
+                <label class="form-label mt-4" for="last_name">Last Name</label>
+                <input class="form-control" type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="payment-form-group">
+                <label class="form-label mt-4" for="cvc">CVC</label>
+                <input class="form-control" type="text" id="cvc" name="cvc" required>
+            </div>
+            <button class= "btn btn-primary" type="submit">Make Payment</button>
+        </form>
+    </div>
+</body>
+</html>

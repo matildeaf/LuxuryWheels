@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=" width=device-width,initial-scale=1">
+    <title>My Account</title>
+    <!--connection to main-css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    <!--Bootswatch template lux-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Luxury Wheels</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class=" collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" id="logout" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="nav-item nav-link" id="home" href="/">Home</a>
+                    {% if user_role == 'admin' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('manage_cars') }}">Manage Cars</a>
+                        </li>
+                    {% endif %}
+                    <div class="nav-spacing"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi-bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                    </svg>
+                    <a class="nav-item nav-link" id="dash_first_name">{{ client[0][1] }}</a>
+                    <a class="nav-item nav-link" id="dash_last_name">{{ client[0][2] }}</a>
+                </div>
+            </div>
+
+
+        </div>
+    </nav>
+    <main>
+        <div class="side-bar-vertical">
+            <a class="side-bar-title">My Bookings</a>
+            <ul>
+                {% for booking in user_booking %}
+                <li>
+                    <strong>Booking ID: {{ booking[0] }}</strong><br>
+                    Vehicle: {{ booking[8] }}<br>
+                    Start Date: {{ booking[3] }}<br>
+                    End Date: {{ booking[4] }}<br>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <section class="content">
+            <h1>My Account</h1>
+            <h2>{{ user_subscription[0] }} Category</h2>
+            <div class="car-card-container">
+                {% for car in cars %}
+                <div class="car-card">
+                    <!--car image -->
+                    <div class="car-card-body">
+                        <h5 class="car-card-title">{{ car[2] }}</h5>
+                        <p class="car-card-text">Type: {{ car[1] }} </p>
+                        <p class="car-card-text">Year: {{ car[4] }} </p>
+                        <p class="car-card-text">Price per Day: {{ car[6] }}</p>
+                        <a href="{{ url_for('booking', vehicle_id=car[0]) }}">Book Now</a><br>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

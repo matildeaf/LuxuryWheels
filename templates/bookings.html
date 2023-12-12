@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=" width=device-width,initial-scale=1">
+    <title>Bookings</title>
+    <!--connection to main-css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <!--Bootswatch template lux-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+</head>
+<body>
+    <div class="booking-card">
+        <h1>Booking Details</h1>
+        <p>You are booking the following vehicle:</p>
+        <p><strong>{{ vehicle[2] }}</strong></p>
+        <p><strong>Type:</strong> {{ vehicle[1] }}</p>
+        <p><strong>Registration:</strong> {{ vehicle[3] }}</p>
+        <p><strong>Year: </strong>{{ vehicle[4] }}</p>
+        <p><strong>Fuel: </strong>{{ vehicle[5] }}</p>
+        <p><strong>Price per day: </strong>{{ vehicle[6] }}</p>
+        <form action="/submit_booking" method = "POST">
+            <input type="hidden" name="vehicle_id" value="{{ vehicle_id }}">
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" required min="{{ current_date }}"><br>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" required min="{{ current_date }}" oninput="validateEndDate()"><br>
+            </div>
+            <span id="end-date-error" style="color: red;"></span>
+            <button type="submit" class= "btn btn-primary" id="submit-button">Submit Booking</button>
+        </form>
+
+        <script>
+            function validateEndDate() {
+                const startDate = new Date(document.getElementById("start_date").value);
+                const endDate = new Date(document.getElementById("end_date").value);
+                const endDateError = document.getElementById("end-date-error");
+
+                if (endDate <= startDate) {
+                    endDateError.textContent = "End date must be greater than the start date.";
+                    submitButton.disabled = true;
+                } else {
+                    endDateError.textContent = "";
+                    submitButton.disabled = false;
+                }
+            }
+        </script>
+</body>
+</html>

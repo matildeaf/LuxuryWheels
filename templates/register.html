@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=" width=device-width,initial-scale=1">
+    <!--connection to main-css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <!--Bootswatch template lux-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css" integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
+    <title> Register </title>
+</head>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+    {% for message in messages %}
+</ul>
+<div class="alert alert-danger alter-dismissable fade show" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% else %}
+<div class="alert alert-success alter-dismissable fade show" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Luxury Wheels</a>
+    <!-- Button for hamburger menu  -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/">Home</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="header">
+        <h1 class="word">Register</h1>
+    </div>
+    <form action="{{ url_for('register') }}" method="post">
+        <div class="msg">{{ msg }}</div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="email">Email</label>
+            <input id="email" name="email" type="text" placeholder="Enter Your Email " class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Enter Your Password" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="first_name">First Name</label>
+            <input id="first_name" name="first_name" type="first_name" placeholder="Enter Your First Name" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="last_name">Last Name</label>
+            <input id="last_name" name="last_name" type="last_name" placeholder="Enter Your Last Name" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="phone_number">Phone Number</label>
+            <input id="phone_number" name="phone_number" type="phone_number" placeholder="Enter Your Phone Number" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="membership_level">Membership :</label>
+            <select class="form-control" id="membership_level" name="membership_level">
+                <option value="1">Economic</option>
+                <option value="2">Silver</option>
+                <option value="3">Gold</option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Sign Up">
+    </form>
+
+    <p class="bottom">Already have an account? <a class="bottom" href="{{url_for('login')}}"> Sign In here</a></p>
+</div>
+</body>
+{% endwith %}
+
+</html>
